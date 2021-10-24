@@ -3,6 +3,7 @@ import 'package:anime/models/anime.dart';
 import 'package:anime/pages/pagesStatefull.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       // Remove the debug banner
       debugShowCheckedModeBanner: false,
-      title: 'Kindacode.com',
+      title: 'ANIME FLV',
       home: HomePage(),
     );
   }
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Kindacode.com'),
+          title: const Text('ANIME FLV'),
         ),
         body: Padding(
             padding: const EdgeInsets.all(10),
@@ -128,19 +129,51 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _dataAnime(Anime anime, context) {
-    return Card(
-        child: Column(children: [
-      Image.network(anime.img),
-      Padding(padding: const EdgeInsets.all(8.0), child: Text(anime.name)),
-      ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PageStatefull(anime.name, anime.img)));
-        },
-        child: Text("More information"),
-      )
-    ]));
+    return Container(
+      margin: EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        child: InkWell(
+          onTap: () => print("ciao"),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
+                child: new Container(
+                  child: Image.network(anime.img),
+                  width: 500,
+                  height: 500,
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  anime.name,
+                  style: TextStyle(
+                    fontSize: 50.0,
+                    color: Colors.cyan,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                subtitle: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PageStatefull(anime.name, anime.img)));
+                  },
+                  child: Text("More information"),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

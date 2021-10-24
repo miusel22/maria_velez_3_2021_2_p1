@@ -43,15 +43,16 @@ class _PageStatefullState extends State<PageStatefull> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("stateless page"),
+        title: Text("Info anime ${widget.name}"),
       ),
       body: FutureBuilder(
         future: _listAnimeInfo,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView(
+            return Center(
+                child: ListView(
               children: _dataAnime(snapshot.data, context),
-            );
+            ));
           } else if (snapshot.hasError) {
             return Text("Error");
           }
@@ -65,13 +66,11 @@ class _PageStatefullState extends State<PageStatefull> {
 
   List<Widget> _dataAnime(List<AnimeInfo> data, context) {
     List<Widget> animeInfo = [];
-
     for (var anime in data) {
       animeInfo.add(Card(
           child: Column(
         children: [
-          // Image.network(widget.img),
-          Padding(padding: const EdgeInsets.all(8.0), child: Text(anime.fact)),
+          ListTile(title: Text(anime.fact), leading: Icon(Icons.label)),
         ],
       )));
     }
