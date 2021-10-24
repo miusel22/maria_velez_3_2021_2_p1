@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_initializing_formals
-
 class Anime {
+  int id;
   String name;
-  String url;
+  String img;
 
-  Anime(name, url) {
+  Anime(id, name, img) {
+    this.id = id;
     this.name = name;
-    this.url = url;
+    this.img = img;
   }
 }
